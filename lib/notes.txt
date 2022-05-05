@@ -1,0 +1,23 @@
+Glade for:
+- brug af provider
+- database synkronisering
+- stukturering af koden
+- mine build metoder har ingen async call
+
+
+Ting jeg kunne have gjort bedre / need to have:
+- i stedet for at overvåge hele objektet, brug context.watch... for bedre performance
+- error handling
+- kommentarer
+- tests
+- klargør til Android
+
+Nice to have:
+- loading indicator ved database sync
+- gem en liste med de gemte billeder på device
+- åben billeder i stor størrelse ved tryk og giv derefter mulighed for at like
+
+
+
+
+
