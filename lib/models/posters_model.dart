@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,9 +12,9 @@ class PostersModel extends ChangeNotifier {
   List<Poster> get() => _posters;
 
   Future<bool> firstLaunch() async {
+    print("firstLaunch " + Isolate.current.debugName.toString());
     await Firebase.initializeApp();
-    await updatePostersURL();
-    return true;
+    return await updatePostersURL();
   }
 
   Future<bool> updatePostersURL() async {

@@ -10,16 +10,14 @@ class Poster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FavoritesModel _favoritesModelListener =
-        Provider.of<FavoritesModel>(context, listen: true);
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: [
-        TextButton(
-          onPressed: () {
-            _favoritesModelListener.markOrUnmarkFavorite(this);
-          },
-          child: Image.network(
+    return TextButton(
+      onPressed: () {
+        context.read<FavoritesModel>().markOrUnmarkFavorite(this);
+      },
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Image.network(
             url,
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) {
@@ -33,19 +31,20 @@ class Poster extends StatelessWidget {
               }
             },
           ),
-        ),
-        Visibility(
-          visible: _favoritesModelListener.get().contains(this),
-          child: const Align(
-            alignment: Alignment.bottomRight,
-            child: Icon(
-              Icons.favorite,
-              color: Colors.red,
-              size: 40.0,
+          Visibility(
+            visible: context.select((FavoritesModel fm) =>
+                fm.get().contains(this)), // Only updates on the this poster.
+            child: const Align(
+              alignment: Alignment.bottomRight,
+              child: Icon(
+                Icons.favorite,
+                color: Colors.red,
+                size: 40.0,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

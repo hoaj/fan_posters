@@ -7,8 +7,6 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FavoritesModel _favoritesModelListener =
-        Provider.of<FavoritesModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
@@ -18,9 +16,9 @@ class FavoritesScreen extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 0.7,
         ),
-        itemCount: _favoritesModelListener.get().length,
+        itemCount: context.select((FavoritesModel fm) => fm.get().length),
         itemBuilder: (context, index) {
-          return _favoritesModelListener.get()[index];
+          return context.watch<FavoritesModel>().get()[index];
         },
       ),
     );

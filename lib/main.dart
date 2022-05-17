@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _future = Provider.of<PostersModel>(context, listen: false).firstLaunch();
+    _future = context.read<PostersModel>().firstLaunch();
   }
 
   @override

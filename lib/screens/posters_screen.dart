@@ -8,10 +8,6 @@ class PostersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PostersModel _postersModelListener =
-        Provider.of<PostersModel>(context, listen: true);
-    final FavoritesModel _favoritesModelListener =
-        Provider.of<FavoritesModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fan Posters'),
@@ -26,14 +22,15 @@ class PostersScreen extends StatelessWidget {
                 const Icon(Icons.favorite),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Text(_favoritesModelListener.get().length.toString()),
+                  child: Text(context.select(
+                      (FavoritesModel fm) => fm.get().length.toString())),
                 )
               ],
             ),
           ),
           IconButton(
             onPressed: () async {
-              await _postersModelListener.updatePostersURL();
+              await context.read<PostersModel>().updatePostersURL();
             },
             icon: const Icon(Icons.refresh),
           ),
@@ -44,9 +41,9 @@ class PostersScreen extends StatelessWidget {
           crossAxisCount: 2,
           childAspectRatio: 0.7,
         ),
-        itemCount: _postersModelListener.get().length,
+        itemCount: context.select((PostersModel pm) => pm.get().length),
         itemBuilder: (context, index) {
-          return _postersModelListener.get()[index];
+          return context.watch<PostersModel>().get()[index];
         },
       ),
     );
